@@ -1,0 +1,24 @@
+<!-- 
+Requisito 11: Splash Screen Personalizado para Android
+
+Este archivo representa el logo que se mostraría en el splash screen.
+En un proyecto real, aquí iría una imagen PNG con el logo de CourseRedux.
+
+Dimensiones recomendadas:
+- drawable-ldpi: 120x120px
+- drawable-mdpi: 160x160px  
+- drawable-hdpi: 240x240px
+- drawable-xhdpi: 320x320px
+- drawable-xxhdpi: 480x480px
+- drawable-xxxhdpi: 640x640px
+
+El splash screen muestra:
+- Fondo: Color primario (#3498db)
+- Centro: Logo de CourseRedux
+- Duración: Mientras la app carga
+-->
+
+LOGO PLACEHOLDER - CourseRedux
+
+En producción, este archivo sería reemplazado por:
+- logo.png (en cada carpeta drawable-*)

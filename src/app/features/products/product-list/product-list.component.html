@@ -1,4 +1,12 @@
-<ActionBar title="Productos" class="action-bar"></ActionBar>
+<ActionBar title="Productos" class="action-bar">
+    <!-- Requisito 10: Botón con animación -->
+    <ActionItem 
+        text="↻" 
+        (tap)="onAnimateButton($event)" 
+        ios.position="right"
+        android.position="actionBar">
+    </ActionItem>
+</ActionBar>
 
 <StackLayout class="page">
     <Label [text]="platformMessage" class="platform-message"></Label>
@@ -11,11 +19,22 @@
             <StackLayout 
                 *ngFor="let product of products" 
                 class="product-card"
-                (tap)="onProductTap(product.id)">
+                (tap)="onProductTap(product.id)"
+                (longPress)="onLongPress(product)"
+                (doubleTap)="onDoubleTap(product)">
+                
                 <Label [text]="product.name" class="product-name"></Label>
                 <Label [text]="product.description" class="product-description"></Label>
                 <Label [text]="'$' + product.price" class="product-price"></Label>
-                <Label [text]="product.category" class="product-category"></Label>
+                <FlexboxLayout flexDirection="row" justifyContent="space-between" alignItems="center">
+                    <Label [text]="product.category" class="product-category"></Label>
+                    <!-- Requisito 5: Botón para action dialog -->
+                    <Button 
+                        text="Cambiar Categoría" 
+                        (tap)="onChangeCategory(product, $event)" 
+                        class="category-btn">
+                    </Button>
+                </FlexboxLayout>
             </StackLayout>
         </StackLayout>
     </ScrollView>

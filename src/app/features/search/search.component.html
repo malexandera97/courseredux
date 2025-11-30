@@ -1,5 +1,38 @@
-<ActionBar title="Search" class="action-bar"></ActionBar>
+<ActionBar title="Buscar Productos" class="action-bar"></ActionBar>
 
 <StackLayout class="page">
-    <Label text="Buscar" class="h2 text-center"></Label>
+    <!-- Requisito 7: Two-way binding [()] -->
+    <StackLayout class="search-container">
+        <Label text="Buscar:" class="search-label"></Label>
+        <TextField 
+            [(ngModel)]="searchQuery" 
+            (textChange)="onSearchChange()"
+            hint="Nombre o categoría del producto"
+            class="search-input">
+        </TextField>
+    </StackLayout>
+
+    <!-- Requisito 2: ListView con plantilla anidada con FlexboxLayout -->
+    <!-- Requisito 4: Pull to refresh -->
+    <ListView 
+        [items]="products" 
+        (itemTap)="onItemTap($event)"
+        (pullToRefreshInitiated)="onPullToRefresh($event)"
+        class="list-group"
+        separatorColor="transparent">
+        <ng-template let-product="item">
+            <!-- FlexboxLayout anidado -->
+            <FlexboxLayout class="product-item" flexDirection="row" justifyContent="space-between" alignItems="center">
+                <FlexboxLayout flexDirection="column" class="product-info">
+                    <Label [text]="product.name" class="product-name"></Label>
+                    <Label [text]="product.description" class="product-description" textWrap="true"></Label>
+                    <FlexboxLayout flexDirection="row" justifyContent="space-between" class="product-meta">
+                        <Label [text]="'$' + product.price" class="product-price"></Label>
+                        <Label [text]="product.category" class="product-category"></Label>
+                    </FlexboxLayout>
+                </FlexboxLayout>
+                <Label text="›" class="chevron"></Label>
+            </FlexboxLayout>
+        </ng-template>
+    </ListView>
 </StackLayout>

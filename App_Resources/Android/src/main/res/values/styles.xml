@@ -1,0 +1,16 @@
+<resources>
+    <!-- Requisito 11: Splash Screen personalizado -->
+    <style name="LaunchScreenTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/ns_primary</item>
+        <item name="colorPrimaryDark">@color/ns_primaryDark</item>
+        <item name="colorAccent">@color/ns_accent</item>
+    </style>
+</resources>

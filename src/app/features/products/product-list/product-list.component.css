@@ -54,3 +54,11 @@
     color: #95a5a6;
     font-style: italic;
 }
+
+.category-btn {
+    font-size: 12;
+    background-color: #3498db;
+    color: white;
+    padding: 8;
+    border-radius: 5;
+}
