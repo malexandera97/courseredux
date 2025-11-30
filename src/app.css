@@ -1,0 +1,30 @@
+/* Global App Styles */
+
+.action-bar {
+    background-color: #3498db;
+    color: white;
+}
+
+.page {
+    padding: 10;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.h1 {
+    font-size: 24;
+    font-weight: bold;
+    margin: 10;
+}
+
+.h2 {
+    font-size: 20;
+    font-weight: bold;
+    margin: 10;
+}
+
+.body {
+    font-size: 14;
+}

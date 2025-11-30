@@ -1,0 +1,23 @@
+<ActionBar title="Detalle del Producto" class="action-bar">
+    <NavigationButton text="Atrás" android.systemIcon="ic_menu_back" (tap)="onBackTap()"></NavigationButton>
+</ActionBar>
+
+<ScrollView class="page">
+    <StackLayout *ngIf="product" class="detail-container">
+        <Label [text]="product.name" class="product-title"></Label>
+        <Label text="Descripción:" class="section-label"></Label>
+        <Label [text]="product.description" class="product-detail-text" textWrap="true"></Label>
+        
+        <Label text="Precio:" class="section-label"></Label>
+        <Label [text]="'$' + product.price" class="product-price-large"></Label>
+        
+        <Label text="Categoría:" class="section-label"></Label>
+        <Label [text]="product.category" class="product-category-text"></Label>
+        
+        <Button text="Agregar al Carrito" class="btn btn-primary"></Button>
+    </StackLayout>
+    
+    <StackLayout *ngIf="!product" class="error-container">
+        <Label text="Producto no encontrado" class="error-text"></Label>
+    </StackLayout>
+</ScrollView>

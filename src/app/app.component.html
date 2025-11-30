@@ -1,0 +1,12 @@
+<GridLayout rows="auto, *">
+    <!-- Navigation Menu -->
+    <GridLayout row="0" columns="*, *, *, *" class="nav-bar">
+        <Button col="0" text="Home" (tap)="navigate('/home')" class="nav-button"></Button>
+        <Button col="1" text="Browse" (tap)="navigate('/browse')" class="nav-button"></Button>
+        <Button col="2" text="Search" (tap)="navigate('/search')" class="nav-button"></Button>
+        <Button col="3" text="Productos" (tap)="navigate('/products')" class="nav-button"></Button>
+    </GridLayout>
+    
+    <!-- Main Content Area -->
+    <page-router-outlet row="1"></page-router-outlet>
+</GridLayout>

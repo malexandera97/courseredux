@@ -1,0 +1,19 @@
+# NativeScript
+node_modules/
+platforms/
+hooks/
+*.js.map
+*.log
+
+# TypeScript
+*.tsbuildinfo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

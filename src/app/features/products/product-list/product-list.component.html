@@ -1,0 +1,22 @@
+<ActionBar title="Productos" class="action-bar"></ActionBar>
+
+<StackLayout class="page">
+    <Label [text]="platformMessage" class="platform-message"></Label>
+    
+    <Label text="Lista de Productos" class="h2 text-center"></Label>
+    
+    <!-- Requisito 7: Vista usando ngFor -->
+    <ScrollView>
+        <StackLayout>
+            <StackLayout 
+                *ngFor="let product of products" 
+                class="product-card"
+                (tap)="onProductTap(product.id)">
+                <Label [text]="product.name" class="product-name"></Label>
+                <Label [text]="product.description" class="product-description"></Label>
+                <Label [text]="'$' + product.price" class="product-price"></Label>
+                <Label [text]="product.category" class="product-category"></Label>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</StackLayout>

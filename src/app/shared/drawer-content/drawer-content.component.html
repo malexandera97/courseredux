@@ -1,0 +1,17 @@
+<GridLayout rows="auto, *" class="drawer-container">
+    <StackLayout row="0" class="drawer-header">
+        <Label text="CourseRedux" class="drawer-header-title"></Label>
+        <Label text="NativeScript App" class="drawer-header-subtitle"></Label>
+    </StackLayout>
+    
+    <ScrollView row="1">
+        <StackLayout class="drawer-content">
+            <StackLayout 
+                *ngFor="let item of navigationItems" 
+                class="drawer-item"
+                (tap)="onNavigationItemTap(item.route)">
+                <Label [text]="item.title" class="drawer-item-text"></Label>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</GridLayout>
