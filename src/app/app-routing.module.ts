@@ -7,7 +7,9 @@ const routes: Routes = [
   { path: 'home', loadChildren: () => import('~/app/features/home/home.module').then(m => m.HomeModule) },
   { path: 'browse', loadChildren: () => import('~/app/features/browse/browse.module').then(m => m.BrowseModule) },
   { path: 'search', loadChildren: () => import('~/app/features/search/search.module').then(m => m.SearchModule) },
-  { path: 'products', loadChildren: () => import('~/app/features/products/products.module').then(m => m.ProductsModule) }
+  { path: 'products', loadChildren: () => import('~/app/features/products/products.module').then(m => m.ProductsModule) },
+  { path: 'favorites', loadChildren: () => import('~/app/features/favorites/favorites.module').then(m => m.FavoritesModule) },
+  { path: 'settings', loadChildren: () => import('~/app/features/settings/settings.module').then(m => m.SettingsModule) }
 ];
 
 @NgModule({

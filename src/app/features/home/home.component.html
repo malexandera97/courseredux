@@ -1,6 +1,75 @@
-<ActionBar title="Home" class="action-bar"></ActionBar>
+<ActionBar title="Inicio" class="action-bar">
+    <ActionItem 
+        text="🗑️ Limpiar Todo" 
+        (tap)="onClearAll()" 
+        ios.position="right"
+        android.position="actionBar">
+    </ActionItem>
+</ActionBar>
 
-<StackLayout class="page">
-    <Label text="Bienvenido a CourseRedux" class="h1 text-center"></Label>
-    <Label text="Aplicación NativeScript con Drawer Navigation" class="body text-center"></Label>
-</StackLayout>
+<ScrollView class="page">
+    <StackLayout class="home-container">
+        <!-- Bienvenida con nombre de usuario persistente -->
+        <StackLayout class="welcome-section">
+            <Label [text]="'👋 Hola, ' + username + '!'" class="welcome-title"></Label>
+            <Label text="Bienvenido a CourseRedux" class="welcome-subtitle"></Label>
+        </StackLayout>
+
+        <StackLayout class="divider"></StackLayout>
+
+        <!-- Requisito: Listado reactivo que se actualiza con Redux Store -->
+        <StackLayout class="read-now-section">
+            <FlexboxLayout flexDirection="row" justifyContent="space-between" alignItems="center">
+                <Label text="📖 Leyendo Ahora" class="section-title"></Label>
+                <Label [text]="(readNowCount$ | async) + ' items'" class="item-count"></Label>
+            </FlexboxLayout>
+            <Label text="Items agregados desde Favoritos con Redux" class="section-description"></Label>
+
+            <!-- Mensaje si no hay items -->
+            <StackLayout *ngIf="(readNowCount$ | async) === 0" class="empty-state">
+                <Label text="📚" class="empty-icon"></Label>
+                <Label text="No hay items en Leer Ahora" class="empty-message"></Label>
+                <Label text="Ve a Favoritos y presiona 'Leer Ahora'" class="empty-hint"></Label>
+            </StackLayout>
+
+            <!-- Listado reactivo de items - se actualiza automáticamente -->
+            <StackLayout *ngIf="(readNowCount$ | async) > 0">
+                <StackLayout 
+                    *ngFor="let item of readNowItems$ | async" 
+                    class="read-now-item">
+                    
+                    <FlexboxLayout flexDirection="column">
+                        <Label [text]="item.name" class="item-name"></Label>
+                        <Label [text]="item.description" class="item-description" textWrap="true"></Label>
+                        
+                        <FlexboxLayout flexDirection="row" justifyContent="space-between" alignItems="center" class="item-meta">
+                            <FlexboxLayout flexDirection="row">
+                                <Label [text]="'$' + item.price" class="item-price"></Label>
+                                <Label [text]="item.category" class="item-category"></Label>
+                            </FlexboxLayout>
+                            
+                            <Button 
+                                text="❌" 
+                                (tap)="onRemoveItem(item)" 
+                                class="btn-remove">
+                            </Button>
+                        </FlexboxLayout>
+                    </FlexboxLayout>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout class="divider"></StackLayout>
+
+        <!-- Información adicional -->
+        <StackLayout class="info-section">
+            <Label text="ℹ️ Acerca de esta app" class="section-title"></Label>
+            <Label text="Esta aplicación demuestra:" class="info-text"></Label>
+            <Label text="• Integración con API Express" class="info-item"></Label>
+            <Label text="• Gestión de estado con Redux (NgRx)" class="info-item"></Label>
+            <Label text="• Persistencia con ApplicationSettings" class="info-item"></Label>
+            <Label text="• Filtrado y búsqueda de productos" class="info-item"></Label>
+            <Label text="• Sistema de favoritos" class="info-item"></Label>
+        </StackLayout>
+    </StackLayout>
+</ScrollView>

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService, Product } from '../../services/product.service';
+import { ApiService, ApiProduct } from '../../services/api.service';
+import { FavoritesService } from '../../services/favorites.service';
 import { RouterExtensions } from '@nativescript/angular';
 import { ObservableArray } from '@nativescript/core';
+import { Toasty } from '@triniwiz/nativescript-toasty';
 
 @Component({
   selector: 'Search',
@@ -9,16 +12,18 @@ import { ObservableArray } from '@nativescript/core';
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-  products: ObservableArray<Product>;
-  allProducts: Product[] = [];
+  products: ObservableArray<ApiProduct>;
   searchQuery: string = ''; // Two-way binding
   isRefreshing: boolean = false;
+  isSearching: boolean = false;
 
   constructor(
     private productService: ProductService,
+    private apiService: ApiService,
+    private favoritesService: FavoritesService,
     private routerExtensions: RouterExtensions
   ) {
-    this.products = new ObservableArray<Product>([]);
+    this.products = new ObservableArray<ApiProduct>([]);
   }
 
   ngOnInit(): void {
@@ -26,23 +31,60 @@ export class SearchComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.allProducts = this.productService.getProducts();
-    this.products.push(...this.allProducts);
+    // Cargar productos desde el API Express
+    this.apiService.searchProducts().subscribe(
+      (apiProducts) => {
+        this.products.splice(0, this.products.length);
+        this.products.push(...apiProducts);
+      },
+      (error) => {
+        console.error('Error al cargar productos:', error);
+        new Toasty({
+          text: '⚠️ No se pudo conectar al API',
+          duration: 'short'
+        }).show();
+      }
+    );
   }
 
-  // Requisito: Two-way binding para búsqueda
-  onSearchChange(): void {
-    if (this.searchQuery.trim() === '') {
-      this.products.splice(0, this.products.length);
-      this.products.push(...this.allProducts);
-    } else {
-      const filtered = this.allProducts.filter(p => 
-        p.name.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        p.category.toLowerCase().includes(this.searchQuery.toLowerCase())
-      );
-      this.products.splice(0, this.products.length);
-      this.products.push(...filtered);
-    }
+  // Requisito: Formulario de búsqueda con filtrado que funciona
+  onSearch(): void {
+    if (this.isSearching) return;
+    
+    this.isSearching = true;
+    
+    const filters = {
+      search: this.searchQuery.trim() || undefined
+    };
+
+    this.apiService.searchProducts(filters).subscribe(
+      (apiProducts) => {
+        this.products.splice(0, this.products.length);
+        this.products.push(...apiProducts);
+        
+        this.isSearching = false;
+        
+        new Toasty({
+          text: `✅ ${apiProducts.length} resultados encontrados`,
+          duration: 'short'
+        }).show();
+      },
+      (error) => {
+        console.error('Error en búsqueda:', error);
+        this.isSearching = false;
+        
+        new Toasty({
+          text: '⚠️ Error al buscar productos',
+          duration: 'short'
+        }).show();
+      }
+    );
+  }
+
+  // Clear search
+  onClearSearch(): void {
+    this.searchQuery = '';
+    this.loadProducts();
   }
 
   // Requisito: Pull to refresh
@@ -50,23 +92,25 @@ export class SearchComponent implements OnInit {
     const listView = args.object;
     this.isRefreshing = true;
     
-    // Simular agregar productos aleatorios
-    setTimeout(() => {
-      const newProduct: Product = {
-        id: this.allProducts.length + 1,
-        name: `Producto Aleatorio ${Math.floor(Math.random() * 1000)}`,
-        description: 'Producto agregado mediante pull to refresh',
-        price: Math.floor(Math.random() * 1000) + 100,
-        category: 'Nueva Categoría'
-      };
-      
-      this.productService.addProduct(newProduct);
-      this.loadProducts();
-      this.onSearchChange();
-      
-      this.isRefreshing = false;
-      listView.notifyPullToRefreshFinished();
-    }, 1000);
+    this.apiService.searchProducts().subscribe(
+      (apiProducts) => {
+        this.products.splice(0, this.products.length);
+        this.products.push(...apiProducts);
+        
+        this.isRefreshing = false;
+        listView.notifyPullToRefreshFinished();
+        
+        new Toasty({
+          text: '✅ Lista actualizada',
+          duration: 'short'
+        }).show();
+      },
+      (error) => {
+        console.error('Error al refrescar:', error);
+        this.isRefreshing = false;
+        listView.notifyPullToRefreshFinished();
+      }
+    );
   }
 
   // Requisito: Navegación a detalle con RouterExtensions
@@ -77,5 +121,20 @@ export class SearchComponent implements OnInit {
         name: 'slide'
       }
     });
+  }
+
+  // Requisito: Ícono para guardar como favorito
+  onToggleFavorite(product: ApiProduct): void {
+    const isFavorite = this.favoritesService.toggleFavorite(product);
+    
+    new Toasty({
+      text: isFavorite ? '⭐ Agregado a favoritos' : '❌ Removido de favoritos',
+      duration: 'short'
+    }).show();
+  }
+
+  // Verifica si un producto está en favoritos
+  isFavorite(productId: number): boolean {
+    return this.favoritesService.isFavorite(productId);
   }
 }

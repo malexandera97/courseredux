@@ -1,6 +1,8 @@
 import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptModule } from '@nativescript/angular';
+import { NativeScriptModule, NativeScriptHttpClientModule } from '@nativescript/angular';
 import { NativeScriptFormsModule } from '@nativescript/angular';
+import { StoreModule } from '@ngrx/store';
+import { readNowReducer } from './store/reducers/read-now.reducer';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +12,10 @@ import { AppComponent } from './app.component';
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
-    AppRoutingModule
+    NativeScriptHttpClientModule, // Requisito: HttpClient para conexión al API
+    AppRoutingModule,
+    // Requisito: Configurar Redux Store
+    StoreModule.forRoot({ readNow: readNowReducer })
   ],
   declarations: [
     AppComponent
