@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { UserSettingsService } from '../../services/user-settings.service';
+import { FirebaseService, NotificationData } from '../../services/firebase.service';
 import { Toasty, ToastDuration } from '@triniwiz/nativescript-toasty';
 
 @Component({
@@ -15,12 +16,17 @@ export class SettingsComponent implements OnInit {
   // Requisito: Nombre de usuario persistente con AppSettings
   username: string = '';
   
+  // Requisito: Token Firebase
+  fcmToken: string = '';
+  notifications: NotificationData[] = [];
+  
   isConnected: boolean = false;
   isTesting: boolean = false;
 
   constructor(
     private apiService: ApiService,
-    private userSettingsService: UserSettingsService
+    private userSettingsService: UserSettingsService,
+    private firebaseService: FirebaseService
   ) {}
 
   ngOnInit(): void {
@@ -36,6 +42,41 @@ export class SettingsComponent implements OnInit {
         this.username = newUsername;
       }
     );
+    
+    // Requisito: Token FCM de Firebase
+    this.fcmToken = this.firebaseService.getToken();
+    
+    // Suscribirse a notificaciones
+    this.firebaseService.notifications$.subscribe(
+      (notifications) => {
+        this.notifications = notifications;
+      }
+    );
+  }
+  
+  // Copiar token al clipboard (simulado con toast)
+  onCopyToken(): void {
+    if (this.fcmToken) {
+      new Toasty({
+        text: `📋 Token: ${this.fcmToken}`,
+        duration: ToastDuration.LONG
+      }).show();
+    } else {
+      new Toasty({
+        text: '⚠️ Token no disponible aún',
+        duration: ToastDuration.SHORT
+      }).show();
+    }
+  }
+  
+  // Limpiar notificaciones
+  onClearNotifications(): void {
+    this.firebaseService.clearNotifications();
+    
+    new Toasty({
+      text: '🗑️ Notificaciones eliminadas',
+      duration: ToastDuration.SHORT
+    }).show();
   }
 
   // Requisito: Editar nombre de usuario y persistir con AppSettings

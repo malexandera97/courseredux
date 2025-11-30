@@ -7,7 +7,9 @@
   "scripts": {
     "android": "ns run android",
     "ios": "ns run ios",
-    "clean": "ns clean"
+    "clean": "ns clean",
+    "test": "karma start karma.conf.js --single-run",
+    "test:watch": "karma start karma.conf.js"
   },
   "dependencies": {
     "@angular/animations": "~16.2.0",
@@ -19,10 +21,16 @@
     "@angular/platform-browser-dynamic": "~16.2.0",
     "@angular/router": "~16.2.0",
     "@nativescript/angular": "~16.0.0",
+    "@nativescript/camera": "^7.0.0",
     "@nativescript/core": "~8.6.0",
+    "@nativescript/firebase-core": "^5.0.2",
+    "@nativescript/firebase-messaging": "^5.0.2",
+    "@nativescript/geolocation": "^9.0.0",
+    "@nativescript/social-share": "^2.3.0",
     "@ngrx/effects": "^16.3.0",
     "@ngrx/store": "^16.3.0",
     "@triniwiz/nativescript-toasty": "~4.1.0",
+    "nativescript-google-maps-sdk": "^3.0.2",
     "rxjs": "~7.8.0",
     "zone.js": "~0.13.0"
   },
@@ -30,6 +38,13 @@
     "@angular/compiler-cli": "~16.2.0",
     "@nativescript/types": "~8.6.0",
     "@nativescript/webpack": "~5.0.0",
+    "@types/jasmine": "^5.1.13",
+    "karma": "^6.4.4",
+    "karma-chrome-launcher": "^3.2.0",
+    "karma-coverage": "^2.2.1",
+    "karma-jasmine": "^5.1.0",
+    "karma-jasmine-html-reporter": "^2.1.0",
+    "karma-junit-reporter": "^2.0.1",
     "typescript": "~5.1.0"
   }
 }

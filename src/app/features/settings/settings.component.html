@@ -78,6 +78,52 @@
 
         <StackLayout class="divider"></StackLayout>
 
+        <!-- Requisito: Token de Firebase y Notificaciones Push -->
+        <StackLayout class="settings-section">
+            <Label text="🔥 Firebase Cloud Messaging" class="section-title"></Label>
+            <Label text="Token FCM para notificaciones push" 
+                   class="section-description" textWrap="true"></Label>
+            
+            <Label text="Token FCM:" class="label-small"></Label>
+            <Label 
+                [text]="fcmToken || 'Cargando token...'" 
+                class="token-text" 
+                textWrap="true">
+            </Label>
+            
+            <Button 
+                text="📋 Copiar Token" 
+                (tap)="onCopyToken()" 
+                class="btn btn-info"
+                [isEnabled]="!!fcmToken">
+            </Button>
+            
+            <!-- Lista de notificaciones recibidas -->
+            <Label text="📬 Notificaciones Recibidas" class="section-title" marginTop="20"></Label>
+            
+            <StackLayout *ngIf="notifications.length === 0" class="empty-state">
+                <Label text="No hay notificaciones aún" class="info-text"></Label>
+            </StackLayout>
+            
+            <StackLayout *ngIf="notifications.length > 0">
+                <StackLayout 
+                    *ngFor="let notification of notifications" 
+                    class="notification-item">
+                    <Label [text]="notification.title" class="notification-title"></Label>
+                    <Label [text]="notification.body" class="notification-body" textWrap="true"></Label>
+                    <Label [text]="notification.receivedAt" class="notification-time"></Label>
+                </StackLayout>
+                
+                <Button 
+                    text="🗑️ Limpiar Notificaciones" 
+                    (tap)="onClearNotifications()" 
+                    class="btn btn-secondary">
+                </Button>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout class="divider"></StackLayout>
+
         <!-- Información adicional -->
         <StackLayout class="settings-section">
             <Label text="ℹ️ Instrucciones" class="section-title"></Label>
