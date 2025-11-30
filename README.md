@@ -1,233 +1,137 @@
-# CourseRedux - NativeScript Application
+# 📱 CourseRedux - NativeScript App
 
-Este proyecto es una aplicación NativeScript con Angular basada en el template [drawer-navigation-ng](https://github.com/NativeScript/template-drawer-navigation-ng).
+> Aplicación móvil completa con NativeScript, Angular, Express API y Redux
 
-## 🎯 Características Implementadas - Fase 1
+[![NativeScript](https://img.shields.io/badge/NativeScript-8.6-blue.svg)](https://nativescript.org/)
+[![Angular](https://img.shields.io/badge/Angular-16.2-red.svg)](https://angular.io/)
+[![Express](https://img.shields.io/badge/Express-4.18-green.svg)](https://expressjs.com/)
+[![Redux](https://img.shields.io/badge/Redux-NgRx%2016-purple.svg)](https://ngrx.io/)
 
-### 1. ✅ Template Drawer Navigation
-- Proyecto basado en `template-drawer-navigation-ng`
-- Enrutador modularizado en features
-- Navegación integrada con barra superior
+## 🎯 Descripción
 
-### 2. ✅ Componentes Nuevos
-- **ProductListComponent**: Lista de productos con detección de plataforma
-- **ProductDetailComponent**: Detalle individual de cada producto
+CourseRedux es una aplicación móvil desarrollada con **NativeScript + Angular** que demuestra:
+- ✅ Integración con API REST (Express.js)
+- ✅ Gestión de estado con Redux (NgRx)
+- ✅ Persistencia de datos local
+- ✅ Sistema de favoritos
+- ✅ Búsqueda y filtrado de productos
+- ✅ Configuración dinámica de endpoints
 
-### 3. ✅ Nuevo Módulo de Features
-- **ProductsModule**: Módulo completo de funcionalidad de productos
-  - Incluye componentes de lista y detalle
-  - Gestión de rutas internas
+## 🚀 Inicio Rápido
 
-### 4. ✅ Submódulo de Ruteo
-- **ProductsRoutingModule**: Ruteo específico para el módulo de productos
-  - Ruta principal: `/products`
-  - Ruta de detalle: `/products/detail/:id`
-
-### 5. ✅ Integración con Navegación
-- Sistema de navegación modular integrado:
-  - Home
-  - Browse
-  - Search
-  - **Productos** (nuevo)
-
-### 6. ✅ Service Global con Inyección de Dependencias
-- **ProductService**: Servicio inyectado a nivel root
-  - Gestión de productos
-  - Métodos: `getProducts()`, `getProductById(id)`, `addProduct()`
-  - Providido globalmente mediante `providedIn: 'root'`
-
-### 7. ✅ Vista con ngFor
-- `ProductListComponent` implementa `*ngFor` para mostrar lista de productos
-- Muestra: nombre, descripción, precio y categoría de cada producto
-
-### 8. ✅ Estilos CSS Específicos por Plataforma
-- **product-list.component.android.css**: Estilos para Android
-  - Colores verde/Material Design
-  - Elevation para cards
-- **product-list.component.ios.css**: Estilos para iOS
-  - Colores azul/iOS design
-  - Border radius más pronunciado
-  - Safe area support
-
-### 9. ✅ Ícono Personalizado en App_Resources
-- Estructura de recursos para Android: `App_Resources/Android/src/main/res/drawable-*/`
-- Estructura de recursos para iOS: `App_Resources/iOS/Assets.xcassets/`
-- README files documentando la personalización de íconos
-
-### 10. ✅ Detección de Plataforma Android
-- En `ProductListComponent.ngOnInit()`:
-```typescript
-if (isAndroid) {
-    this.platformMessage = 'Estás usando Android';
-} else {
-    this.platformMessage = 'Estás usando iOS';
-}
+### 1. Clonar repositorio
+```bash
+git clone https://github.com/malexandera97/courseredux.git
+cd courseredux
 ```
-- Variable `platformMessage` se asigna solo cuando se ejecuta en Android
 
-## 🚀 Características Implementadas - Fase 2
+### 2. Instalar dependencias
+```bash
+npm install
+cd express-server && npm install && cd ..
+```
 
-### 11. ✅ ListView con FlexboxLayout Anidado
-- **SearchComponent** implementa ListView con plantilla personalizada
-- FlexboxLayout anidado en dos niveles
-- Diseño responsive con justifyContent y alignItems
+### 3. Iniciar servidor Express
+```bash
+# Opción 1: Script PowerShell
+.\start-server.ps1
 
-### 12. ✅ Navegación con RouterExtensions
-- Uso de `RouterExtensions.navigate()` en SearchComponent y ProductListComponent
-- Transiciones personalizadas (slide, fade)
-- Navegación desde lista a detalle con parámetros
+# Opción 2: Manual
+cd express-server
+npm start
+```
 
-### 13. ✅ Pull to Refresh
-- ListView en SearchComponent con `pullToRefreshInitiated`
-- Genera productos aleatorios al hacer pull
-- Actualiza el listado dinámicamente
-- Animación nativa de refresh
+### 4. Ejecutar app NativeScript
+```bash
+# Android
+ns run android
 
-### 14. ✅ Action Dialog
-- Botón "Cambiar Categoría" en ProductListComponent
-- Muestra opciones mediante `action()` de NativeScript
-- Modifica el atributo `category` del producto
-- Confirmación con toast notification
+# iOS
+ns run ios
+```
 
-### 15. ✅ Toast Notifications
-- Plugin: `@triniwiz/nativescript-toasty`
-- Múltiples usos:
-  - Al guardar cambios
-  - Al cambiar categoría
-  - Al agregar a favoritos
-  - Al enviar reseña
-- Posiciones: top, center, bottom
-- Colores personalizados
+## 📚 Documentación
 
-### 16. ✅ Two-Way Binding [()]
-- Búsqueda en SearchComponent: `[(ngModel)]="searchQuery"`
-- Edición de producto: `[(ngModel)]="editedName"` y `[(ngModel)]="editedPrice"`
-- Formulario de reseña: `[(ngModel)]="userEmail"` y `[(ngModel)]="reviewText"`
-- Sincronización automática entre vista y modelo
+- **[README-FINAL.md](README-FINAL.md)** - Documentación completa del proyecto
+- **[VALIDATION-PART1.md](VALIDATION-PART1.md)** - Validación Fase 1
+- **[VALIDATION-PART2.md](VALIDATION-PART2.md)** - Validación Fase 2
+- **[VALIDATION-PART3.md](VALIDATION-PART3.md)** - Validación Fase 3
+- **[express-server/README.md](express-server/README.md)** - Documentación del API
 
-### 17. ✅ Validadores Personalizados con Directivas
-- **MinLengthValidatorDirective**: Valida longitud mínima
-- **EmailValidatorDirective**: Valida formato de email
-- Implementan `Validator` interface de Angular
-- Registrados en `NG_VALIDATORS`
-- Mensajes de error dinámicos en HTML
-
-### 18. ✅ Detección de Gestos
-- **Long Press**: Muestra alert con información del producto
-- **Double Tap**: Agrega a favoritos con toast
-- **Tap**: Navegación estándar al detalle
-- Implementados en ProductListComponent
-
-### 19. ✅ Animaciones
-- Botón en ActionBar con animación rotate 360°
-- Duración: 500ms
-- Curve: easeInOut
-- Reset automático después de la animación
-
-### 20. ✅ Splash Screen Personalizado Android
-- `splash_screen.xml`: Layer list con color y logo
-- `styles.xml`: LaunchScreenTheme personalizado
-- Aplicado en AndroidManifest.xml
-- Transición automática a AppTheme
-
-## Estructura del Proyecto
+## 🏗️ Estructura
 
 ```
 courseredux/
-├── App_Resources/
-│   ├── Android/
-│   │   └── src/main/
-│   │       ├── AndroidManifest.xml
-│   │       └── res/
-│   │           ├── drawable/
-│   │           │   ├── splash_screen.xml    # ⭐ Splash personalizado
-│   │           │   └── logo.txt
-│   │           ├── drawable-hdpi/
-│   │           └── values/
-│   │               ├── colors.xml
-│   │               ├── strings.xml
-│   │               └── styles.xml           # ⭐ LaunchScreenTheme
-│   └── iOS/
-│       ├── Info.plist
-│       └── Assets.xcassets/
-├── src/
-│   ├── app/
-│   │   ├── features/
-│   │   │   ├── home/
-│   │   │   ├── browse/
-│   │   │   ├── search/                      # ⭐ ListView + FlexboxLayout
-│   │   │   │   ├── search.module.ts
-│   │   │   │   ├── search-routing.module.ts
-│   │   │   │   ├── search.component.ts      # ⭐ Pull-to-refresh
-│   │   │   │   ├── search.component.html
-│   │   │   │   └── search.component.css
-│   │   │   └── products/
-│   │   │       ├── products.module.ts
-│   │   │       ├── products-routing.module.ts
-│   │   │       ├── product-list/
-│   │   │       │   ├── product-list.component.ts        # ⭐ Gestos + Animación
-│   │   │       │   ├── product-list.component.html
-│   │   │       │   ├── product-list.component.css
-│   │   │       │   ├── product-list.component.android.css
-│   │   │       │   └── product-list.component.ios.css
-│   │   │       └── product-detail/
-│   │   │           ├── product-detail.component.ts      # ⭐ Two-way binding
-│   │   │           ├── product-detail.component.html    # ⭐ Validadores
-│   │   │           └── product-detail.component.css
-│   │   ├── services/
-│   │   │   └── product.service.ts
-│   │   ├── directives/                                   # ⭐ NUEVO
-│   │   │   ├── min-length-validator.directive.ts        # ⭐ Validador custom
-│   │   │   └── email-validator.directive.ts             # ⭐ Validador custom
-│   │   ├── shared/
-│   │   │   └── drawer-content/
-│   │   ├── app.module.ts
-│   │   ├── app-routing.module.ts
-│   │   ├── app.component.ts
-│   │   └── app.component.html
-│   ├── main.ts
-│   └── app.css
-├── package.json                             # ⭐ Incluye @triniwiz/nativescript-toasty
-├── tsconfig.json
-├── nativescript.config.ts
-├── webpack.config.js
-├── README.md
-├── VALIDATION.md                            # Fase 1
-├── VALIDATION-PART2.md                      # ⭐ Fase 2
-├── TESTING.md
-└── COMO-PROBAR.md
+├── express-server/         # API Express
+├── src/app/
+│   ├── features/          # Componentes
+│   ├── services/          # Services
+│   ├── store/             # Redux Store
+│   └── directives/        # Custom Directives
+└── App_Resources/         # Recursos nativos
 ```
 
-## Instalación
+## 🔧 Tecnologías
 
-```bash
-npm install
-```
+- **Frontend:** NativeScript 8.6, Angular 16.2
+- **Estado:** NgRx Store 16
+- **Backend:** Express.js 4.18
+- **Persistencia:** ApplicationSettings
+- **HTTP:** Angular HttpClient
+- **Notificaciones:** @triniwiz/nativescript-toasty
 
-## Ejecutar la Aplicación
+## 📱 Características
 
-### Android
-```bash
-npm run android
-```
+### 🔍 Búsqueda
+- Formulario con filtrado en tiempo real
+- Conexión a API Express
+- Pull-to-refresh
 
-### iOS
-```bash
-npm run ios
-```
+### ⭐ Favoritos
+- Sistema de favoritos persistente
+- Agregar/remover con un tap
+- Listado dedicado
 
-## Tecnologías
+### 📖 Redux "Leer Ahora"
+- Store configurado con NgRx
+- Actions, Reducers, Selectors
+- Listado reactivo en Home
 
-- **NativeScript** 8.6
-- **Angular** 16.2
-- **NativeScript UI SideDrawer** 9.1
-- **TypeScript** 5.1
+### ⚙️ Configuración
+- Editar nombre de usuario
+- Configurar URL API (Ngrok)
+- Persistencia con ApplicationSettings
 
-## Autor
+## 🌐 API Express
 
-Alexander Maldonado
-CEUTEC - Estructura de Datos
+### Endpoints
 
-## Licencia
+**GET /api/products**
+- Parámetros: `search`, `category`, `minPrice`, `maxPrice`
+- Ejemplo: `/api/products?search=laptop&category=Electronics`
 
-Este proyecto es para fines educativos.
+**GET /api/products/:id**
+- Obtiene producto por ID
+
+## 📊 Requisitos Completados: 30/30 ✅
+
+- ✅ Fase 1: 10/10 (Fundamentos NativeScript)
+- ✅ Fase 2: 10/10 (Características Avanzadas)
+- ✅ Fase 3: 10/10 (API, Redux, Persistencia)
+
+## 🎓 Proyecto Académico
+
+**Curso:** Estructura de Datos  
+**Institución:** CEUTEC  
+**Autor:** Alexander  
+**Año:** 2025  
+
+## 📄 Licencia
+
+Este proyecto es parte de un ejercicio académico.
+
+---
+
+**🎉 Proyecto Completo - 100% Requisitos Cumplidos**
+
+Para más detalles, consulta [README-FINAL.md](README-FINAL.md)
