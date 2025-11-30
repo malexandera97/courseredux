@@ -113,25 +113,5 @@ courseredux/
 **GET /api/products/:id**
 - Obtiene producto por ID
 
-## 📊 Requisitos Completados: 30/30 ✅
-
-- ✅ Fase 1: 10/10 (Fundamentos NativeScript)
-- ✅ Fase 2: 10/10 (Características Avanzadas)
-- ✅ Fase 3: 10/10 (API, Redux, Persistencia)
-
-## 🎓 Proyecto Académico
-
-**Curso:** Estructura de Datos  
-**Institución:** CEUTEC  
-**Autor:** Alexander  
-**Año:** 2025  
-
-## 📄 Licencia
-
-Este proyecto es parte de un ejercicio académico.
-
----
-
 **🎉 Proyecto Completo - 100% Requisitos Cumplidos**
 
-Para más detalles, consulta [README-FINAL.md](README-FINAL.md)
